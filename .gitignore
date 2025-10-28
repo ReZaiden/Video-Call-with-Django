@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+**/*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/فا
+
+# IDE files
+.idea/
+*.swp
+
+# Data base
+**/migrations/0*.py
+db.sqlite3
+
+# Static and media folders
+static/
+media/
+
+# .env
+.env
+
+# Logs
+logs/*
