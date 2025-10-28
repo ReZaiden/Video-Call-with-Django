@@ -18,7 +18,6 @@ venv/
 db.sqlite3
 
 # Static and media folders
-static/
 media/
 
 # .env
