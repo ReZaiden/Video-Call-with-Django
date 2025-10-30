@@ -1,8 +1,9 @@
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
-from .models import VideoCall
+from .models import VideoCall, User
+from django.contrib.auth import authenticate, login
 
 class VideoCallView(View):
     def get(self, request):
@@ -13,4 +14,35 @@ class VideoCallView(View):
 
             return render(request, 'VideoCall/videocall.html', context=context)
         else:
-            return HttpResponse("Unauthorized", status=401)
+            return HttpResponseRedirect("/videocall/login/")
+
+
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect('/videocall/')
+        return render(request, 'VideoCall/login.html')
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect('/videocall/')
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+        type = request.POST.get('type', None)
+        print(username, password, type)
+        if username and password:
+            if type == "signin":
+                print("signin")
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return HttpResponseRedirect('/videocall/')
+                else:
+                    return HttpResponseRedirect("/videocall/login/")
+            elif type == "signup":
+                print("signup")
+                email = request.POST.get('email', None)
+                user = User.objects.create_user(username=username, password=password, email=email)
+                login(request, user)
+                return HttpResponseRedirect('/videocall/')
+
