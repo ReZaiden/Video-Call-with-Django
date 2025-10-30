@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Video Call App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="{% static 'VideoCall/css/login.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Authentication Pages -->
+    <div id="auth-container" class="auth-container">
+
+        <!-- Sign In Page -->
+        <div id="signin-page" class="page active">
+            <div class="auth-card">
+                <div class="logo">VC</div>
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Sign in to continue to your video calls</p>
+                <form method="post" action="{% url 'login' %}">
+                    <input name="type" type="text" value="signin" style="display: none">
+                    {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input name="username" type="text" class="form-input" placeholder="Enter your username...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input name="password" type="password" class="form-input" placeholder="Enter your password...">
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary">Sign In</button>
+                    <button class="btn-link" onclick="switchToSignup()" type="button">Don't have an account? Sign Up</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+
+        <!-- Sign Up Page -->
+        <div id="signup-page" class="page">
+            <div class="auth-card">
+                <div class="logo">VC</div>
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Join us and start video calling</p>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <input type="text" name="type" value="signup" style="display: none">
+                <div class="form-group">
+                    <label class="form-label">User name</label>
+                    <input name="username" type="text" class="form-input" placeholder="Enter username...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input name="email" type="email" class="form-input" placeholder="Enter email...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input name="password" type="password" class="form-input" placeholder="Create password...">
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary">Sign Up</button>
+                    <button class="btn-link" onclick="switchToSignin()" type="button">Already have an account? Sign In</button>
+                </div>
+                    </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{% static "VideoCall/js/login.js" %}">
+    </script>
+</body>
+</html>
