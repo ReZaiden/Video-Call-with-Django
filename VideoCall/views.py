@@ -14,18 +14,18 @@ class VideoCallView(View):
 
             return render(request, 'VideoCall/videocall.html', context=context)
         else:
-            return HttpResponseRedirect("/videocall/login/")
+            return HttpResponseRedirect("/login/")
 
 
 class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect('/videocall/')
+            return HttpResponseRedirect('')
         return render(request, 'VideoCall/login.html')
 
     def post(self, request):
         if request.user.is_authenticated:
-            return HttpResponseRedirect('/videocall/')
+            return HttpResponseRedirect('')
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
         type = request.POST.get('type', None)
@@ -36,13 +36,13 @@ class LoginView(View):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return HttpResponseRedirect('/videocall/')
+                    return HttpResponseRedirect('/')
                 else:
-                    return HttpResponseRedirect("/videocall/login/")
+                    return HttpResponseRedirect("/login/")
             elif type == "signup":
                 print("signup")
                 email = request.POST.get('email', None)
                 user = User.objects.create_user(username=username, password=password, email=email)
                 login(request, user)
-                return HttpResponseRedirect('/videocall/')
+                return HttpResponseRedirect('/')
 
