@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Call - WhatsApp Style</title>
+    <title>Video Call - Django</title>
     <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="{% static 'VideoCall/css/style.css' %}" rel="stylesheet">
 </head>
@@ -25,20 +25,9 @@
                 </button>
             </div>
         </div>
-
+        <p id="info-text"></p>
         <div class="history-title">Recent Calls</div>
         <div id="history-list" class="history-list">
-            {% for call in call_logs %}
-                <div class="history-info">
-                {% if call.caller == user %}
-                <h6>{{ call.receiver.username }}</h6>
-                {% elif call.receiver == user %}
-                <h6>{{ call.caller.username }}</h6>
-                {% endif %}
-                <p>Video call • {{ call.duration }} • {{ call.call_start_time.time }}</p>
-        </div>
-            {% empty %}
-            {% endfor %}
         </div>
     </div>
 
@@ -83,5 +72,14 @@
     </div>
 
     <script src="{% static 'VideoCall/js/main.js' %}"></script>
+    <script>
+        {% for call in call_logs %}
+            {% if call.receiver == user %}
+            ShowHistory("{{ call.caller.username }}", "{{  call.duration }}", "{{ call.call_start_time.time }}")
+            {% else %}
+            ShowHistory("{{ call.receiver.username }}", "{{  call.duration }}", "{{ call.call_start_time.time }}")
+            {% endif %}
+        {% endfor %}
+    </script>
 </body>
 </html>
