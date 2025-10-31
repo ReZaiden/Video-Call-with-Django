@@ -28,7 +28,8 @@ const configuration = {
 };
 
 // WebSocket connection
-const socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/ws/video_call/");
+const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+const socket = new WebSocket(protocol + window.location.host + '/ws/video_call/');
 
 socket.onopen = () => console.log("WebSocket connected ✅");
 
